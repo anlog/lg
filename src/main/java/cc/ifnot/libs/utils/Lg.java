@@ -191,17 +191,16 @@ public class Lg {
     }
 
     private static void wrap(int level, String format, Object... msg) {
-        if (Lg.level <= LESS) {
-            List<Object> logs = new ArrayList<>();
-            Collections.addAll(logs, msg);
-            List<Throwable> throwables = new ArrayList<>();
-            for (Object o : msg) {
-                if (o instanceof Throwable) {
-                    throwables.add((Throwable) o);
-                    logs.remove(o);
-                }
+        List<Object> logs = new ArrayList<>();
+        Collections.addAll(logs, msg);
+        List<Throwable> throwables = new ArrayList<>();
+        for (Object o : msg) {
+            if (o instanceof Throwable) {
+                throwables.add((Throwable) o);
+                logs.remove(o);
             }
-
+        }
+        if (logs.size() > 0) {
             o(new Formatter().format(format, logs.toArray()).toString(), level);
             for (Throwable t : throwables) {
                 o(t, level);
