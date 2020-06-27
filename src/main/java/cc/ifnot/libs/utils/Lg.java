@@ -26,6 +26,7 @@ public class Lg {
     public static final int SILENT = Integer.MAX_VALUE;
 
     private static final int BASE = 29;
+    private static final String EMPTY_LINE = "";
     private static String TAG = "Lg";
     private static boolean init = false;
     private static boolean isAndroid;
@@ -218,12 +219,20 @@ public class Lg {
         o(msg, INFO);
     }
 
+    public static void i() {
+        o(EMPTY_LINE, INFO);
+    }
+
     public static void v(String format, Object... msg) {
         wrap(VERBOSE, format, msg);
     }
 
     public static void v(Object msg) {
         o(msg, VERBOSE);
+    }
+
+    public static void v() {
+        o(EMPTY_LINE, VERBOSE);
     }
 
     public static void d(String format, Object... msg) {
@@ -234,6 +243,10 @@ public class Lg {
         o(msg, DEBUG);
     }
 
+    public static void d() {
+        o(EMPTY_LINE, DEBUG);
+    }
+
     public static void w(String format, Object... msg) {
         wrap(WARN, format, msg);
     }
@@ -242,11 +255,19 @@ public class Lg {
         o(msg, WARN);
     }
 
+    public static void w() {
+        o(EMPTY_LINE, WARN);
+    }
+
     public static void e(String format, Object... msg) {
         wrap(ERROR, format, msg);
     }
 
     public static void e(Object msg) {
         o(msg, ERROR);
+    }
+
+    public static void e() {
+        o(EMPTY_LINE, ERROR);
     }
 }

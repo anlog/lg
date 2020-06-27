@@ -40,7 +40,7 @@ task androidJar(type: Jar, dependsOn: assemble) {
 dependencies {
 
 //    api project(':utils')
-    api project(':')
+//    api project(':')
 
     lintChecks project(':utils_lint')
     lintPublish project(':utils_lint')
