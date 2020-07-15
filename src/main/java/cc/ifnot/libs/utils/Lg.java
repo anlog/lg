@@ -3,6 +3,7 @@ package cc.ifnot.libs.utils;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Formatter;
 import java.util.List;
@@ -194,11 +195,23 @@ public class Lg {
         List<Object> logs = new ArrayList<>();
         Collections.addAll(logs, msg);
         List<Throwable> throwables = new ArrayList<>();
-        for (Object o : msg) {
-            if (o instanceof Throwable) {
-                throwables.add((Throwable) o);
-                logs.remove(o);
-            }
+        int index = 0;
+            for (Object o : msg) {
+                if (o instanceof Throwable) {
+                    throwables.add((Throwable) o);
+                    logs.remove(o);
+                }
+                if (o instanceof Collection) {
+                    StringBuilder sb = new StringBuilder();
+                    Collection c = (Collection) o;
+                    sb.append("[ ");
+                    for (Object a : c) {
+                        sb.append(a);
+                    }
+                    sb.append(" ]");
+                    logs.set(index, sb.toString());
+                }
+                index++;
         }
         if (logs.size() > 0) {
             o(new Formatter().format(format, logs.toArray()).toString(), level);
