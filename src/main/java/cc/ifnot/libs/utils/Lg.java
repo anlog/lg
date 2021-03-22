@@ -10,9 +10,6 @@ import java.util.List;
 import java.util.Locale;
 
 public class Lg {
-    public static final int MORE = 0;
-
-    public static final int LESS = 1;
 
     public static final int VERBOSE = 2;
 
@@ -132,7 +129,7 @@ public class Lg {
             if (msg instanceof Throwable) {
                 print(msg, level);
             } else {
-                if (Lg.level > LESS) {
+                if (Lg.level > DEBUG) {
                     print(msg, level);
                 } else {
                     Thread thread = Thread.currentThread();
@@ -147,7 +144,7 @@ public class Lg {
                         }
                     }
 
-                    msg = Lg.level == MORE ?
+                    msg = true ?
                             String.format(Locale.getDefault(), "%s[%s:%d@%s]: %s",
                                     stack.getFileName() == null ? "Anonymous" :
                                             stack.getFileName().replace(".java", "")

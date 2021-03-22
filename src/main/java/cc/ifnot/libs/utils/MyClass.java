@@ -19,7 +19,7 @@ public class MyClass {
         Lg.d("md5 of %s -> %s", "hello", MD5.toHexString(
                 MD5.md5("hello".getBytes())));
         Lg.tag("LogUtils");
-        Lg.level(Lg.MORE);
+        Lg.level(Lg.DEBUG);
 
         Lg.i("%s - %s", "b", "hekko");
 
