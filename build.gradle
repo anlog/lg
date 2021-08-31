@@ -1,32 +1,31 @@
 buildscript {
-    ext.kotlin_version = '1.4.31'
+    ext.kotlin_version = '1.5.30'
+    ext.androidTools = '30.0.1'
 
     def cmd = 'git rev-list HEAD --count --first-parent'
     ext.version_code = cmd.execute().text.trim().toInteger()
     ext.version_suffix = 'git rev-parse --short HEAD'.execute().text.trim()
     ext.version_name = (version_code / 100).toInteger() + ".${version_code}-${version_suffix}"
 
-    ext.versions = [
-            'androidTools': '27.0.1',
-    ]
-
     ext.deps = [
             'lint': [
-                    'core'  : "com.android.tools.lint:lint:${versions.androidTools}",
-                    'api'   : "com.android.tools.lint:lint-api:${versions.androidTools}",
-                    'checks': "com.android.tools.lint:lint-checks:${versions.androidTools}",
-                    'tests' : "com.android.tools.lint:lint-tests:${versions.androidTools}",
+                    'core'  : "com.android.tools.lint:lint:${androidTools}",
+                    'api'   : "com.android.tools.lint:lint-api:${androidTools}",
+                    'checks': "com.android.tools.lint:lint-checks:${androidTools}",
+                    'tests' : "com.android.tools.lint:lint-tests:${androidTools}",
             ],
     ]
 
     repositories {
         google()
-        jcenter()
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
 
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:4.1.3'
+        classpath 'com.android.tools.build:gradle:7.0.1'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
     }
 }
@@ -34,22 +33,19 @@ buildscript {
 allprojects {
     repositories {
         google()
-        jcenter()
 
     }
 }
 
 apply plugin: 'java-library'
 apply plugin: 'kotlin'
-apply plugin: 'maven'
+apply plugin: 'maven-publish'
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
     compileOnly deps.lint.api
     compileOnly deps.lint.checks
-//    lintPublish project(':log_lint')
-//    implementation project(':utils_lint')
 }
 
 sourceCompatibility = JavaVersion.VERSION_1_8
